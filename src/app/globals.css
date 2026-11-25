@@ -1,26 +1,76 @@
-@import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    color-scheme: light;
+  }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-canvas text-ink font-sans;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  }
+
+  ::selection {
+    @apply bg-accent text-white;
+  }
+
+  /* Numeric data (prices, mm, qty) uses tabular figures for crisp alignment. */
+  .tabular {
+    font-variant-numeric: tabular-nums;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .spec-divider {
+    @apply h-px w-full bg-line;
+  }
+
+  .spec-label {
+    @apply text-[10px] uppercase tracking-[0.14em] text-ink-muted font-mono;
+  }
+
+  .spec-value {
+    @apply text-sm text-ink tabular;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-ink px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-accent {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm bg-accent px-5 py-3 text-sm font-medium text-white transition-colors hover:bg-accent-hover disabled:cursor-not-allowed disabled:opacity-50;
+  }
+
+  .btn-ghost {
+    @apply inline-flex items-center justify-center gap-2 rounded-sm border border-line bg-surface px-5 py-3 text-sm font-medium text-ink transition-colors hover:border-ink;
+  }
+
+  .input-base {
+    @apply w-full rounded-sm border border-line bg-surface px-3 py-2.5 text-sm text-ink outline-none transition-colors placeholder:text-ink-muted focus:border-ink disabled:cursor-not-allowed disabled:bg-canvas;
+  }
+
+  .card {
+    @apply rounded-sm border border-line bg-surface shadow-panel;
+  }
+
+  .tag {
+    @apply inline-flex items-center rounded-xs bg-canvas px-2 py-1 font-mono text-[10px] uppercase tracking-widest text-ink-soft;
+  }
+}
+
+@layer utilities {
+  .grid-bg {
+    background-image:
+      linear-gradient(to right, rgba(20, 20, 19, 0.04) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(20, 20, 19, 0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
 }
